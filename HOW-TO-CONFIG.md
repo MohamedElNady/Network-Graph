@@ -70,7 +70,7 @@ NetworkBadge links to NetworkNode by matching BadgeNodeID to NodeID at render ti
 
 ---
 
-## Step 2 — Microflows to Create
+## Step 2 — Microflows to Create (Not Mandatory you can start displaying all nodes without them)
 
 ### ACT_Graph_LoadData
 **Trigger:** Called when the user opens or refreshes the graph view.
@@ -827,54 +827,3 @@ Each segment is independent and only shown when it carries information:
 The visible count uses the same intersection logic as the graph overlay — if focus and filter are both active, the count reflects nodes passing **both**.
 
 ---
-
-## Step 8 — Deploy the Widget
-
-1. Copy `dist/2.0.0/mendix.NetworkGraph.mpk` to your Mendix project's `widgets/` folder.
-2. In Studio Pro: **App → Synchronize App Directory**.
-3. The **Network Graph** widget appears in the toolbox.
-4. Run locally and open your graph page.
-
----
-
-## Overlay Architecture Notes (for developers)
-
-The widget uses a **unified intersection model** for all overlay features:
-
-```
-applyOverlay() runs whenever any of the following change:
-  - focusedNodeId          (focus mode)
-  - searchMatchIds         (search)
-  - timelineVisibleIds     (timeline nodes)
-  - timelineVisibleEdgeIds (timeline edges)
-  - filterVisibleIds       (filter panel)
-
-Algorithm:
-  visibleSets = [] of Set<nodeId>
-  For each active feature → push its Set into visibleSets
-  visibleNodes = INTERSECTION of all sets
-  dimmedNodes  = ALL node IDs − visibleNodes
-
-Node update:
-  - opacity 0.12 if dimmed (0.45 if dimmed AND has badge alert in investigation mode)
-  - gold border (#F59E0B) if search-highlighted and not dimmed
-  - badge worstColor border + lineWidth 4 if has alert and investigation mode is on
-Edge update: dim if either endpoint is dimmed OR edge is outside timeline range
-```
-
-`baseNodesRef` / `baseEdgesRef` store clean node/edge objects (with all `_*` metadata fields intact). `DataSet.update()` is used for all overlay changes — `setData()` is only called on actual data changes, which resets the physics layout. This separation is what keeps the layout stable across theme changes, filter changes, and search queries.
-
----
-
-## Upgrade Guide — v1 to v2
-
-| v1 property | v2 property |
-|---|---|
-| `nodeRiskScore` | `nodeScoreAttribute` |
-| `alertDataSource` | `badgeDataSource` |
-| `alertNodeId` | `badgeNodeId` |
-| `alertSeverity` | `badgeCategory` |
-| `alertType` | `badgeLabel` |
-| `filterByRisk` | `filterByScore` |
-| (hardcoded severity colors) | `badgeTypeConfig` — add one row per category |
-| (hardcoded investigation node types) | `nodeTypeConfig` — add rows for your domain; or enable `useDefaultStyles` |
