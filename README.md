@@ -1,6 +1,6 @@
 # Network Graph Widget
 
-An interactive entity relationship network graph widget for Mendix 10/11, powered by **Vis.js Network**. Visualize nodes and edges from Mendix data sources with rich overlays, filtering, theming, and investigation-grade features.
+An interactive entity relationship network graph widget for Mendix 10/11. Visualize nodes and edges from Mendix data sources with rich overlays, filtering, theming, and investigation-grade features.
 
 ---
 
@@ -309,27 +309,4 @@ Input: $Investigation
 
 ---
 
-## Development
 
-### Prerequisites
-- Node.js ≥ 16
-- Mendix Studio Pro 10+
-
-### Build commands
-
-```bash
-npm install
-npm run build     # Production build → dist/1.0.0/mendix.NetworkGraph.mpk
-npm run dev       # Watch mode with hot reload into Mendix test project
-npm run release   # Minified production build
-npm run lint      # Lint check
-npm run lint:fix  # Auto-fix lint issues
-```
-
-Set `package.json → config.projectPath` to your Mendix project root for `dev` mode:
-
-```json
-"config": {
-    "projectPath": "C:/Projects/YourMendixApp"
-}
-```
