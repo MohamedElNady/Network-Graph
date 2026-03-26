@@ -308,5 +308,4 @@ Input: $Investigation
 | Investigation mode not opening filter panel | Enable **Show filter panel** in Features. The filter panel must be enabled for investigation mode to open it automatically. |
 
 ---
-
-
+[![Watch the video](https://img.youtube.com/vi/EHP-th4g-DU/0.jpg)](https://youtu.be/EHP-th4g-DU?si=PGXeHhOJ1L7j7rwe)
